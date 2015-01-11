@@ -1,0 +1,22 @@
+<package>
+  <description brief="pid_cont">
+	This node implements Dr. Daniel Mellinger's
+	RAM 2010 paper with the additional integral
+	term. The integral term compensates for the
+	unmodelled robot parameters such as mass, 
+	inertia and propeller characteristics.
+	This node listens for current and next states
+	and generates TRPY (and some more 
+	parameters) to be fed to asctec/khex low level
+	driver.
+  </description>
+  <author>Salih Tolga Ozaslan</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <depend package="roscpp"/>
+  <depend package="utilities"/>
+  <depend package="com_msgs"/>
+  <depend package="cont_msgs"/>
+</package>
+
+

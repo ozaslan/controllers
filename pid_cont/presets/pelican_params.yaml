@@ -1,0 +1,36 @@
+mass: 1.327
+
+refresh_rate: 100.0
+
+debug_mode: 1
+
+kp_yaw  :  75.0
+kd_yaw  :  18.0
+kp_pitch: 258.0
+kp_roll : 258.0
+kd_pitch:  20.0
+kd_roll :  20.0
+
+kp_x:  5.0
+kp_y:  5.0
+kp_z: 25.0
+kd_x:  3.0
+kd_y:  3.0
+kd_z: 10.0
+
+d1: 1301.2
+d2:   39.7
+kF:    1.5468e-07
+
+max_angle      :   0.3488
+max_thrust     : 200.0
+max_thrust_step:  20.0
+max_yaw_delta  :   0.3488
+
+max_omega: 0.261799383
+max_acc  : 1.0
+
+
+
+
+

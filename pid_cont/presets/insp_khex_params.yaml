@@ -1,0 +1,32 @@
+# These parameters are for the inspection KHex
+# with 4 LED's, 2 Laser's and 4 cameras mounted.
+
+refresh_rate: 100.0
+debug_mode  : TRUE
+
+mass : 2.351
+
+kp_yaw  :  75.0
+kd_yaw  :  18.0
+kp_pitch: 258.0
+kp_roll : 258.0
+kd_pitch:  20.0
+kd_roll :  20.0
+
+kp_x:  5.0
+kp_y:  5.0
+kp_z: 25.0
+ki_x:  0.0
+ki_y:  0.0
+ki_z:  0.0
+kd_x:  3.0
+kd_y:  3.0
+kd_z: 10.0
+
+max_tilt   :   0.3488
+max_thrust : 200.0
+max_dthrust:  20.0
+max_dyaw   :   0.3488
+max_acc    : 1.0
+
+
