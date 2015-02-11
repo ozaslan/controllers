@@ -143,7 +143,7 @@ int calculate_control_parameters()
 {
 	prev_time = curr_time;
 	curr_time = ros::Time::now();
-	dt = Dt(prev_time, curr_time);
+	dt = Dt(curr_time, prev_time);
 
 	if(debug_mode){
 		ROS_INFO("curr time : [%d, %d]", curr_time.sec, curr_time.nsec);
@@ -204,28 +204,41 @@ int calculate_control_parameters()
 	int_err += (pos_to - pos_from) * dt;
 
 	// Limit the accelerations and rotational speeds
+	//cout << "acc_des before limiting : " << acc_des << endl;
 	if(acc_des.norm() > max_acc)
 		acc_des *= max_acc / acc_des.norm();
+	//cout << "acc_des after  limiting : " << acc_des << endl;
 
 	euler_des(0) = (1/g) * (acc_des(0) * sin(psi_from) - acc_des(1) * cos(psi_from));
 	euler_des(1) = (1/g) * (acc_des(0) * cos(psi_from) + acc_des(1) * sin(psi_from));
 	euler_des(2) = psi_to;
 	// Saturate resultant inputs
+	//cout << "euler_des before saturation : " << euler_des << endl;
 	euler_des(0) = saturate(euler_des(0), -max_tilt, max_tilt);
 	euler_des(1) = saturate(euler_des(1), -max_tilt, max_tilt);
-	
+	//cout << "euler_des after  saturation : " << euler_des << endl;
+
 	// Convert accelation to motor input (thrust := grams)
 	// double thrust = (sqrt((mass*(acc_des(2) + g))/(4*kF)) - d1 ) / d2 ;
-	double thrust = mass * (acc_des(2) + g);
+	double thrust = mass * (acc_des(2)) * 1000;
 	//if(acc_des(2) < 0) // cannot check 'thrust' due to sqrt(...)
 	//	thrust = 1;
+	//cout << "thrust (1) : " << thrust << endl;
 	thrust = thrust < 1 ? 1 : thrust;
+	//cout << "thrust (2) : " << thrust << endl;
 	// Prevent sudden step-ups
 	static double prev_thrust = 0.0;
-	if((thrust - prev_thrust)/dt >= max_dthrust)
+	double dthrust = (thrust - prev_thrust) / dt;
+	//cout << "prev_thrust : " << prev_thrust << endl;
+	//cout << "dt : " << dt << endl;
+	//cout << "dthrust " << dthrust << endl;
+	//cout << "max_thrust : " << max_thrust << endl;
+	if(dthrust >= 0 && dthrust >= max_dthrust)
 		thrust = prev_thrust + dt * max_dthrust;
+	//cout << "thrust (3) : " << thrust << endl;
 	if(thrust > max_thrust)
 		thrust = max_thrust;
+	//cout << "thrust (4) : " << thrust << endl;
 	prev_thrust = thrust;
 
 	// Pass the inputs to the driver side
@@ -246,7 +259,7 @@ int calculate_control_parameters()
 	pdcmd_msg.kp_yaw 	= kp_yaw;
 	pdcmd_msg.kd_yaw 	= kd_yaw;
 
-	if(debug_mode)
+	if(debug_mode && 0)
 	{
 		ROS_INFO("------------------- PID CONT -------------------");
 		ROS_INFO(" thrust       = [%.3f]", thrust);
