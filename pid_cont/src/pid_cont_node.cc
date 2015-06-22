@@ -1,3 +1,6 @@
+#include <ros/ros.h>
+#include <Eigen/Dense>
+
 #include "pid_cont.hh"
 
 using namespace std;
@@ -76,7 +79,6 @@ int process_inputs(const ros::NodeHandle &n)
 	n.param("max_dyaw"		, params.max_dyaw, DEG2RAD(20.0));
 	n.param("refresh_rate"	, refresh_rate, 100.0);
 	n.param("debug_mode"	, debug_mode, true);
-
 
 	ROS_INFO(" --------------- PID CONT ---------------");
 	ROS_INFO("[mass] ---------------- : [%.3lf]", params.mass);

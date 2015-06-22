@@ -91,7 +91,7 @@ com_msgs::PDCmd PIDController::generate_command(const cont_msgs::Heading &headin
 	pdcmd_msg.yaw		= euler_des(2);
 	pdcmd_msg.droll		= 0;
 	pdcmd_msg.dpitch	= 0;
-	pdcmd_msg.dyaw		= 0;
+	pdcmd_msg.dyaw		= heading.omega_to.z;
 	pdcmd_msg.kp_roll 	= _params.kp_roll;
 	pdcmd_msg.kd_roll 	= _params.kd_roll;
 	pdcmd_msg.kp_pitch	= _params.kp_pitch;
