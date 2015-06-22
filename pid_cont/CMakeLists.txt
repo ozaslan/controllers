@@ -11,6 +11,8 @@ set(ROS_BUILD_TYPE Release)
 
 rosbuild_init()
 
+find_package(cmake_modules REQUIRED)
+
 find_package(Eigen REQUIRED)                    
 include_directories(${Eigen_INCLUDE_DIRS}) 
 
@@ -23,5 +25,7 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 #uncomment if you have defined services
 #rosbuild_gensrv()
 
-rosbuild_add_executable(${PROJECT_NAME} src/${PROJECT_NAME}_node.cc)
+rosbuild_add_library(pid_cont src/pid_cont.cc)
+rosbuild_add_executable(${PROJECT_NAME}_node src/${PROJECT_NAME}_node.cc)
+target_link_libraries(${PROJECT_NAME}_node pid_cont) 
 

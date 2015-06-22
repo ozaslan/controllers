@@ -14,7 +14,7 @@
   <license>BSD</license>
   <review status="unreviewed" notes=""/>
   <depend package="roscpp"/>
-  <depend package="utilities"/>
+  <depend package="utils"/>
   <depend package="com_msgs"/>
   <depend package="cont_msgs"/>
 </package>
