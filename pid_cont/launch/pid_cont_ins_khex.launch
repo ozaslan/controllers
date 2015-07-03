@@ -1,0 +1,34 @@
+<launch>
+
+<node pkg="pid_cont"
+    name="pid_cont"
+    type="pid_cont_node"
+    output="screen">
+
+    <param name="mass"      value="1.327" />
+  	<param name="kp_roll"   value="258.0" />
+  	<param name="kd_roll"   value="20.0" />
+  	<param name="kp_pitch"  value="258.0" />
+  	<param name="kd_pitch"  value="20.0" />
+  	<param name="kp_yaw"    value="18.0" />
+  	<param name="kd_yaw"    value="18.0" />
+  	<param name="kp_x"      value="5.0" />
+  	<param name="kp_y"      value="5.0" />	
+  	<param name="kp_z"      value="25.0" />
+  	<param name="kd_x"      value="3.0" />
+  	<param name="kd_y"      value="3.0" />	
+  	<param name="kd_z"      value="10.0" />		
+  	<param name="ki_x"      value="0.0" />
+  	<param name="ki_y"      value="0.0" />	
+  	<param name="ki_z"      value="0.0" />		
+  	<param name="max_tilt"  value="0.174" />
+  	<param name="max_thrust"    value="3000.0" />
+  	<param name="max_acc"		    value="1.0" />
+  	<param name="max_dthrust"   value="200.0" />
+  	<param name="max_dyaw"	    value="0.348" />
+  	<param name="refresh_rate"	value="300.0" />
+  	<param name="debug_mode"	  value="false" />
+
+  </node>
+
+</launch>

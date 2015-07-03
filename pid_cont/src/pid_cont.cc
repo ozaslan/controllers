@@ -29,6 +29,8 @@ com_msgs::PDCmd PIDController::generate_command(const cont_msgs::Heading &headin
 
 	// Constrain the maximum yaw speed.
 	double dpsi = utils::fix_angle(psi_to - psi_from) / dt;
+	//cout << "dpsi = " << dpsi << endl;
+	//cout << "psi_to = " << psi_to << " psi_from = " << psi_from << endl;
 	dpsi = utils::clamp(dpsi, -_params.max_dyaw, _params.max_dyaw);
 	psi_to = utils::fix_angle(psi_from + dt * dpsi);
 
@@ -59,11 +61,14 @@ com_msgs::PDCmd PIDController::generate_command(const cont_msgs::Heading &headin
 	acc_des(1) = acc_to(1) + _params.kd_y * (vel_to(1) - vel_from(1)) + _params.kp_y * (pos_to(1) - pos_from(1)) + _params.ki_y * _int_err(1);
 	acc_des(2) = acc_to(2) + _params.kd_z * (vel_to(2) - vel_from(2)) + _params.kp_z * (pos_to(2) - pos_from(2)) + _params.ki_z * _int_err(2);
 
+  //cout << "acc_des[0] = " << acc_des << endl;
+  //cout << "max_acc = " << _params.max_acc << endl;
+
 	_int_err += (pos_to - pos_from) * dt;
 
 	// Limit the accelerations and rotational speeds
 	if(acc_des.norm() > _params.max_acc)
-		acc_des *= _params.max_acc / acc_des.norm();
+		acc_des *= _params.max_acc / (acc_des.norm() + 1e-9);
 
 	euler_des(0) = (1/_params.g) * (acc_des(0) * sin(psi_from) - acc_des(1) * cos(psi_from));
 	euler_des(1) = (1/_params.g) * (acc_des(0) * cos(psi_from) + acc_des(1) * sin(psi_from));
@@ -73,7 +78,10 @@ com_msgs::PDCmd PIDController::generate_command(const cont_msgs::Heading &headin
 	euler_des(1) = utils::clamp(euler_des(1), -_params.max_tilt, _params.max_tilt);
 
 	// Convert accelation to motor input (thrust := grams)
-	double thrust = _params.mass * (acc_des(2)) * 1000;
+  //cout << "acc_des[1] = " << acc_des << endl;
+  //cout << "_params.g = " << _params.g << endl;
+	double thrust = _params.mass * (acc_des(2) + _params.g) / _params.g * 1000;
+  //cout << "thrust[0] = " << thrust << endl;
 	thrust = thrust < 1 ? 1 : thrust;
 	// Prevent sudden step-ups
 	double dthrust = (thrust - _prev_thrust) / dt;
@@ -84,11 +92,12 @@ com_msgs::PDCmd PIDController::generate_command(const cont_msgs::Heading &headin
 		thrust = _params.max_thrust;
 	_prev_thrust = thrust;
 
+  //cout << "thrust[1] = " << thrust << endl;
 	// Pass the inputs to the driver side
 	pdcmd_msg.thrust	= thrust;
 	pdcmd_msg.roll		= euler_des(0);
 	pdcmd_msg.pitch		= euler_des(1);
-	pdcmd_msg.yaw		= euler_des(2);
+	pdcmd_msg.yaw		  = euler_des(2);
 	pdcmd_msg.droll		= 0;
 	pdcmd_msg.dpitch	= 0;
 	pdcmd_msg.dyaw		= heading.omega_to.z;
@@ -99,6 +108,20 @@ com_msgs::PDCmd PIDController::generate_command(const cont_msgs::Heading &headin
 	pdcmd_msg.kp_yaw 	= _params.kp_yaw;
 	pdcmd_msg.kd_yaw 	= _params.kd_yaw;
 
+  /*
+	cout << "pdcmd_msg :" << endl;
+	cout << "thrust = " << pdcmd_msg.thrust << endl;
+	cout << "roll   = " << pdcmd_msg.roll   << endl;
+	cout << "pitch  = " << pdcmd_msg.pitch << endl;
+	cout << "yaw    = " << pdcmd_msg.yaw << endl;
+	cout << "dyaw   = " << pdcmd_msg.dyaw << endl;
+	cout << "kp_roll = " << pdcmd_msg.kp_roll << endl;
+	cout << "kd_roll = " << pdcmd_msg.kd_roll << endl;
+	cout << "kp_pitch = " << pdcmd_msg.kp_pitch << endl;
+	cout << "kd_pitch = " << pdcmd_msg.kd_pitch << endl;
+	cout << "kp_yaw = " << pdcmd_msg.kp_yaw << endl;
+	cout << "kd_yaw = " << pdcmd_msg.kd_yaw << endl;
+  */
 	return pdcmd_msg;
 }
 

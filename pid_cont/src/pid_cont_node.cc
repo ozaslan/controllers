@@ -78,7 +78,9 @@ int process_inputs(const ros::NodeHandle &n)
 	n.param("max_dthrust"	, params.max_dthrust, 200.0); // in grams/sec
 	n.param("max_dyaw"		, params.max_dyaw, DEG2RAD(20.0));
 	n.param("refresh_rate"	, refresh_rate, 100.0);
-	n.param("debug_mode"	, debug_mode, true);
+	n.param("debug_mode"	, debug_mode, false);
+
+	debug_mode = false;
 
 	ROS_INFO(" --------------- PID CONT ---------------");
 	ROS_INFO("[mass] ---------------- : [%.3lf]", params.mass);
@@ -94,6 +96,7 @@ int process_inputs(const ros::NodeHandle &n)
 	ROS_INFO("[debug_mode] ---------- : [%s]", debug_mode ? "TRUE" : "FALSE");
 	ROS_INFO("[max_dthrust] --------- : [%.3lf]", params.max_dthrust);
 	ROS_INFO("[max_dyaw] ------------ : [%.3lf]", params.max_dyaw);
+	ROS_INFO("[g] ------------------- : [%.3lf]", params.g);
 	ROS_INFO(" ---------------------------------------------");
 
 	pid_cont.set_params(params);
@@ -126,8 +129,13 @@ void heading_callback(const cont_msgs::Heading &msg)
 		ROS_INFO("PID CONT : Received cont_msgs::Heading");
 	}
 
-	pdcmd_publ.publish(pid_cont.generate_command(msg));
+	static int seq = 0;
+	com_msgs::PDCmd pdcmd_msg = pid_cont.generate_command(msg);
+	pdcmd_msg.header.seq = seq++;
+	pdcmd_msg.header.stamp = ros::Time::now();
+	pdcmd_msg.header.frame_id = "world";
 
+	pdcmd_publ.publish(pdcmd_msg);
 }
 
 // ### Update parameters here
