@@ -57,18 +57,18 @@ int process_inputs(const ros::NodeHandle &n)
 	// These default values are for the Pelican robot
 	// and g is for the Earth :)
 	n.param("mass", params.mass, 1.327);
-	n.param("kp_roll", params.kp_roll, 258.0);
-	n.param("kd_roll", params.kd_roll, 20.0);
-	n.param("kp_pitch", params.kp_pitch, 258.0);
-	n.param("kd_pitch", params.kd_pitch, 20.0);
-	n.param("kp_yaw", params.kp_yaw, 18.0);	
-	n.param("kd_yaw", params.kd_yaw, 18.0);	
-	n.param("kp_x", params.kp_x, 5.0);
-	n.param("kp_y", params.kp_y, 5.0);	
-	n.param("kp_z", params.kp_z, 25.0);
-	n.param("kd_x", params.kd_x, 3.0);
-	n.param("kd_y", params.kd_y, 3.0);	
-	n.param("kd_z", params.kd_z, 10.0);		
+	n.param("kp_roll", params.kp_roll, 0.0);
+	n.param("kd_roll", params.kd_roll, 0.0);
+	n.param("kp_pitch", params.kp_pitch, 0.0);
+	n.param("kd_pitch", params.kd_pitch, 0.0);
+	n.param("kp_yaw", params.kp_yaw, 3.0);	
+	n.param("kd_yaw", params.kd_yaw, 3.0);	
+	n.param("kp_x", params.kp_x, 0.0);
+	n.param("kp_y", params.kp_y, 0.0);	
+	n.param("kp_z", params.kp_z, 0.0);
+	n.param("kd_x", params.kd_x, 0.0);
+	n.param("kd_y", params.kd_y, 0.0);	
+	n.param("kd_z", params.kd_z, 0.0);		
 	n.param("ki_x", params.ki_x, 0.0);
 	n.param("ki_y", params.ki_y, 0.0);	
 	n.param("ki_z", params.ki_z, 0.0);		
