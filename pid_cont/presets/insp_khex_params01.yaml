@@ -1,0 +1,40 @@
+### COMMENTS ON THE CONDITIONS THE PARAMETERS SET WORKS WELL
+#
+#   These parameters have been tested with Vicon, pid_cont and
+#   rc_nav. Paramteres are for velocity control only.
+#   For non-zero kp values no guarantee is provided.
+#
+#   These parameters are for the inspection KHex
+#   with 4 LED's, 2 Laser's and 4 cameras mounted.
+#
+#   Results were very good. 
+
+refresh_rate: 100.0
+debug_mode  : FALSE
+
+mass : 2.281
+
+kp_yaw  :   0.00
+kd_yaw  :   0.50
+kp_pitch:   0.0
+kp_roll :   0.0
+kd_pitch:   0.0
+kd_roll :   0.0
+
+kp_x:  0.0
+kp_y:  0.0
+kp_z:  0.0
+ki_x:  0.0
+ki_y:  0.0
+ki_z:  0.0
+kd_x: 2.40
+kd_y: 2.50
+kd_z: 2.50
+
+max_tilt   : 0.5235
+max_thrust : 5000
+max_dthrust: 1000.0
+max_dyaw   : 1.3488
+max_acc    : 7.3
+
+

@@ -1,8 +1,14 @@
-# These parameters are for the inspection KHex
-# with 4 LED's, 2 Laser's and 4 cameras mounted.
+### COMMENTS ON THE CONDITIONS THE PARAMETERS SET WORKS WELL
+#
+#   
+#   
+#   These parameters are for the inspection KHex
+#   with 4 LED's, 2 Laser's and 4 cameras mounted.
+#
+#   These parameters are still waiting to be tested.
 
 refresh_rate: 100.0
-debug_mode  : TRUE
+debug_mode  : FALSE
 
 mass : 2.281
 
