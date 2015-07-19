@@ -80,7 +80,6 @@ int process_inputs(const ros::NodeHandle &n)
 	n.param("refresh_rate"	, refresh_rate, 100.0);
 	n.param("debug_mode"	, debug_mode, false);
 
-	debug_mode = false;
 
 	ROS_INFO(" --------------- PID CONT ---------------");
 	ROS_INFO("[mass] ---------------- : [%.3lf]", params.mass);
