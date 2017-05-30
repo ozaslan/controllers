@@ -10,7 +10,7 @@
 refresh_rate: 100.0
 debug_mode  : FALSE
 
-mass : 2.281
+mass : 2.4
 
 kp_yaw  :   1.00
 kd_yaw  :   0.10
@@ -19,19 +19,19 @@ kp_roll :   0.0
 kd_pitch:   0.0
 kd_roll :   0.0
 
-kp_x:  0.20
-kp_y:  1.50
-kp_z:  1.50
+kp_x:  0.8
+kp_y:  1.4 #1.5
+kp_z:  1.7 #1.5
 ki_x:  0.0
 ki_y:  0.0
 ki_z:  0.0
-kd_x: 7.50
-kd_y: 7.50
-kd_z: 7.50
+kd_x: 6.50 #7.50
+kd_y: 5.50 #7.50
+kd_z: 10.50 #7.50
 
 max_tilt   : 0.3235
 max_thrust : 5000
-max_dthrust: 1000.0
+max_dthrust: 3000.0
 max_dyaw   : 1.3488
 max_acc    : 7.3
 
